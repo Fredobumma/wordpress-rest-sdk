@@ -1,0 +1,7 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"steps": [
+		{ "step": "defineWpConfigConsts", "consts": { "WP_ENVIRONMENT_TYPE": "local" } },
+		{ "step": "setSiteOptions", "options": { "permalink_structure": "/%postname%/" } }
+	]
+}

@@ -1,0 +1,74 @@
+{
+	"name": "wordpress-rest",
+	"version": "0.1.0",
+	"description": "A typed TypeScript SDK for the WordPress REST API, with types generated from your own site.",
+	"keywords": [
+		"wordpress",
+		"wp-api",
+		"rest-api",
+		"sdk",
+		"typescript",
+		"wpapi",
+		"gutenberg"
+	],
+	"license": "MIT",
+	"author": "Manfred Obumma <fredobumma@gmail.com>",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/fredobumma/wordpress-rest.git"
+	},
+	"homepage": "https://github.com/fredobumma/wordpress-rest#readme",
+	"bugs": "https://github.com/fredobumma/wordpress-rest/issues",
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./codegen": {
+			"types": "./dist/codegen/generate.d.ts",
+			"default": "./dist/codegen/generate.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"bin": {
+		"wordpress-rest": "./dist/codegen/cli.js"
+	},
+	"files": [
+		"dist",
+		"src"
+	],
+	"engines": {
+		"node": ">=22"
+	},
+	"scripts": {
+		"build": "rm -rf dist && tsc -p tsconfig.build.json",
+		"prepack": "pnpm build",
+		"typecheck": "tsc -p tsconfig.json",
+		"lint": "biome check .",
+		"format": "biome check --write .",
+		"test": "vitest run",
+		"test:unit": "vitest run --project unit",
+		"test:integration": "vitest run --project integration",
+		"generate:core": "tsx scripts/generate-core.ts",
+		"generate:site": "tsx scripts/generate-site.ts",
+		"wp": "tsx scripts/serve.ts",
+		"check": "pnpm typecheck && pnpm lint && pnpm test"
+	},
+	"packageManager": "pnpm@10.5.2",
+	"devDependencies": {
+		"@biomejs/biome": "2.5.15",
+		"@types/node": "26.6.5",
+		"@wp-playground/cli": "3.1.58",
+		"tsx": "4.23.15",
+		"typescript": "7.0.2",
+		"vitest": "5.0.4"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild",
+			"fs-ext-extra-prebuilt"
+		]
+	}
+}

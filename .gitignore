@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.wp/
+coverage/
+*.log
+.DS_Store
+.wp-credentials.json

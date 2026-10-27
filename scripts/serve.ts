@@ -1,0 +1,20 @@
+/**
+ * `pnpm wp`: runs the test site on http://127.0.0.1:9400 until interrupted,
+ * for trying the SDK by hand or running the integration tests against it.
+ */
+
+import { writeFile } from 'node:fs/promises';
+import { startTestSite } from '../test/support/site.js';
+
+const site = await startTestSite({ port: 9400 });
+await writeFile('.wp-credentials.json', `${JSON.stringify({ admin: site.admin, author: site.author }, null, '\t')}\n`);
+console.log(`WordPress is running at ${site.url} (wp-admin: admin / password)`);
+console.log(`Application passwords are in .wp-credentials.json. To test against it:`);
+console.log(`  WORDPRESS_URL=${site.url} WORDPRESS_CREDENTIALS=.wp-credentials.json pnpm test:integration`);
+
+const stop = async () => {
+	await site.stop();
+	process.exit(0);
+};
+process.on('SIGINT', stop);
+process.on('SIGTERM', stop);

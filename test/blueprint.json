@@ -1,0 +1,17 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"steps": [
+		{ "step": "defineWpConfigConsts", "consts": { "WP_ENVIRONMENT_TYPE": "local" } },
+		{ "step": "setSiteOptions", "options": { "permalink_structure": "/%postname%/" } },
+		{ "step": "mkdir", "path": "/wordpress/wp-content/mu-plugins" },
+		{
+			"step": "cp",
+			"fromPath": "/wordpress/wp-content/sdk-test/sdk-test-plugin.php",
+			"toPath": "/wordpress/wp-content/mu-plugins/sdk-test-plugin.php"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-load.php'; $u = get_user_by('login', 'admin'); list($password) = WP_Application_Passwords::create_new_application_password($u->ID, array('name' => 'wordpress-rest tests')); $author = wp_insert_user(array('user_login' => 'author', 'user_pass' => 'author-pass', 'role' => 'author', 'user_email' => 'author@example.com')); list($authorPassword) = WP_Application_Passwords::create_new_application_password($author, array('name' => 'wordpress-rest tests')); for ($i = 1; $i <= 23; $i++) { wp_insert_post(array('post_title' => \"Seed post $i\", 'post_content' => \"<!-- wp:paragraph --><p>Body $i</p><!-- /wp:paragraph -->\", 'post_status' => 'publish', 'post_author' => $u->ID)); } file_put_contents('/wordpress/wp-content/sdk-test/credentials.json', json_encode(array('admin' => array('username' => 'admin', 'password' => $password), 'author' => array('username' => 'author', 'password' => $authorPassword))));"
+		}
+	]
+}
