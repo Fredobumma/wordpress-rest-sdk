@@ -1,5 +1,5 @@
 {
-	"name": "wordpress-rest",
+	"name": "wordpress-rest-sdk",
 	"version": "0.1.0",
 	"description": "A typed TypeScript SDK for the WordPress REST API, with types generated from your own site.",
 	"keywords": [
@@ -15,10 +15,10 @@
 	"author": "Manfred Obumma <fredobumma@gmail.com>",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/fredobumma/wordpress-rest.git"
+		"url": "git+https://github.com/fredobumma/wordpress-rest-sdk.git"
 	},
-	"homepage": "https://github.com/fredobumma/wordpress-rest#readme",
-	"bugs": "https://github.com/fredobumma/wordpress-rest/issues",
+	"homepage": "https://github.com/fredobumma/wordpress-rest-sdk#readme",
+	"bugs": "https://github.com/fredobumma/wordpress-rest-sdk/issues",
 	"type": "module",
 	"sideEffects": false,
 	"exports": {
@@ -33,7 +33,7 @@
 		"./package.json": "./package.json"
 	},
 	"bin": {
-		"wordpress-rest": "./dist/codegen/cli.js"
+		"wordpress-rest-sdk": "./dist/codegen/cli.js"
 	},
 	"files": [
 		"dist",

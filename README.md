@@ -1,9 +1,9 @@
-# wordpress-rest
+# wordpress-rest-sdk
 
 A TypeScript SDK for the WordPress REST API. Its types come from WordPress itself, so they cover every core route, plus your own custom post types, fields and plugin routes.
 
 ```ts
-import { createClient } from 'wordpress-rest';
+import { createClient } from 'wordpress-rest-sdk';
 
 const wp = createClient({ url: 'https://example.com' });
 
@@ -13,7 +13,7 @@ const posts = await wp.posts.list({ per_page: 5, _fields: ['id', 'title.rendered
 
 - **Typed from the source.** WordPress describes every route with JSON Schema. The types are generated from those schemas: 257 routes in WordPress 7.1, each with its parameters, its response, and docs from the schema's descriptions.
 - **Types that follow your request.** `context: 'edit'` adds raw fields, `_fields` narrows the response to what you asked for, and `force: true` on a delete changes what comes back. A misspelled parameter, a wrong type or a missing id is a compile error.
-- **Your site, not just core.** `npx wordpress-rest generate --url https://your-site` writes types for every route on your site, including custom post types, registered meta and plugin endpoints.
+- **Your site, not just core.** `npx wordpress-rest-sdk generate --url https://your-site` writes types for every route on your site, including custom post types, registered meta and plugin endpoints.
 - **The whole API.** Pagination with totals, `/batch/v1`, media uploads, application passwords, including the authorization flow, revisions, autosaves and abilities.
 - **Runs anywhere `fetch` does.** Node 22+, browsers, Deno, Bun, Cloudflare Workers. No dependencies.
 
@@ -22,7 +22,7 @@ It is meant as a successor to [node-wpapi](https://github.com/WP-API/node-wpapi)
 ## Install
 
 ```sh
-npm install wordpress-rest
+npm install wordpress-rest-sdk
 ```
 
 ## Reading
@@ -73,7 +73,7 @@ Users can't be trashed, so WordPress requires `force` and `reassign`. The types 
 Core types ship with the package. To get types for your own site, generate a route map from it. The map covers custom post types and taxonomies, fields registered with `register_meta` or `register_rest_field`, and plugin routes.
 
 ```sh
-npx wordpress-rest generate --url https://example.com --out src/wordpress.ts
+npx wordpress-rest-sdk generate --url https://example.com --out src/wordpress.ts
 ```
 
 ```ts
@@ -85,7 +85,7 @@ const books = await wp.collection('/wp/v2/books').list({ genres: [4], _fields: [
 //    ^? { id: number; meta: { isbn: string } }[]
 ```
 
-To include routes only signed-in users can see, pass `--username` and `--password`, or set `WORDPRESS_USERNAME` and `WORDPRESS_PASSWORD`. Run `npx wordpress-rest --help` for the other options.
+To include routes only signed-in users can see, pass `--username` and `--password`, or set `WORDPRESS_USERNAME` and `WORDPRESS_PASSWORD`. Run `npx wordpress-rest-sdk --help` for the other options.
 
 ## Pagination
 
@@ -150,7 +150,7 @@ createClient({ url, auth: ({ headers }) => headers.set('x-api-key', key) });
 An app can ask users to approve an application password, rather than have them paste one in:
 
 ```ts
-import { authorizationUrl, parseAuthorization } from 'wordpress-rest';
+import { authorizationUrl, parseAuthorization } from 'wordpress-rest-sdk';
 
 const endpoint = await wp.authorizationEndpoint(); // null if the site turned them off
 if (endpoint) redirect(authorizationUrl(endpoint, { appName: 'My App', successUrl: 'https://my.app/connected' }));
@@ -163,7 +163,7 @@ if (result.approved) save(result.siteUrl, result.username, result.password);
 ## Errors
 
 ```ts
-import { isWordPressError } from 'wordpress-rest';
+import { isWordPressError } from 'wordpress-rest-sdk';
 
 try {
   await wp.posts.get(123);
@@ -213,6 +213,8 @@ pnpm generate:core    # regenerate src/generated/core.ts from a stock WordPress
 ```
 
 The integration tests run against real WordPress. [WordPress Playground](https://wordpress.org/playground/) runs it in Node, so the tests need no Docker, PHP or database.
+
+The site from `pnpm wp` has two users: `admin` (password `password`) and `author` (password `author-pass`). Their application passwords, which work for API requests but not on the login page, are written to `.wp-credentials.json`.
 
 ## License
 

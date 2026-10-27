@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: wordpress-rest test fixtures
+ * Plugin Name: wordpress-rest-sdk test fixtures
  * Description: A custom post type with registered meta, so site-specific type generation has something to find.
  */
 add_action( 'init', function () {

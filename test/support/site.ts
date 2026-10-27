@@ -42,7 +42,7 @@ async function waitForFile(path: string, timeout = 60_000): Promise<string> {
 
 export async function startTestSite(options: { port?: number } = {}): Promise<TestSite> {
 	// The blueprint copies the plugin from, and writes credentials to, this folder.
-	const dir = await mkdtemp(join(tmpdir(), 'wordpress-rest-'));
+	const dir = await mkdtemp(join(tmpdir(), 'wordpress-rest-sdk-'));
 	await copyFile(plugin, join(dir, 'sdk-test-plugin.php'));
 	const server = await startPlayground({ blueprint: 'test/blueprint.json', mount: dir, port: options.port });
 	try {

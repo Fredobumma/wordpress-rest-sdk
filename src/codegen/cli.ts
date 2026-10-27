@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * `wordpress-rest generate`: writes types for every route on a site,
+ * `wordpress-rest-sdk generate`: writes types for every route on a site,
  * including custom post types, registered meta and plugin routes.
  */
 
@@ -11,7 +11,7 @@ import type { Auth } from '../auth.js';
 import { createClient } from '../client.js';
 import { CORE_OVERRIDES, type GenerateOptions, generate, type RestIndex } from './generate.js';
 
-const HELP = `Usage: wordpress-rest generate [options]
+const HELP = `Usage: wordpress-rest-sdk generate [options]
 
 Writes a TypeScript route map for a WordPress site. Pass it to createClient():
 

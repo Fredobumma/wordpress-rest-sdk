@@ -95,7 +95,7 @@ describe('users', () => {
 
 	it('issues, uses and revokes an application password', async () => {
 		const passwords = wp.users.applicationPasswords('me');
-		expect((await passwords.introspect()).name).toBe('wordpress-rest tests');
+		expect((await passwords.introspect()).name).toBe('wordpress-rest-sdk tests');
 
 		const issued = await passwords.create({ name: 'temporary' });
 		const temporary = createClient({ url, auth: { username: 'admin', password: String(issued.password) } });
@@ -109,8 +109,8 @@ describe('users', () => {
 describe('site settings', () => {
 	it('updates and restores a setting', async () => {
 		const before = await wp.settings.get();
-		expect((await wp.settings.update({ description: 'Tested by wordpress-rest' })).description).toBe(
-			'Tested by wordpress-rest',
+		expect((await wp.settings.update({ description: 'Tested by wordpress-rest-sdk' })).description).toBe(
+			'Tested by wordpress-rest-sdk',
 		);
 		await wp.settings.update({ description: before.description });
 	});

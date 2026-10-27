@@ -42,7 +42,7 @@ interface BatchResponse {
 /**
  * Creates a client for one WordPress site. Types come from `R`: stock
  * WordPress by default, or a route map generated from your site with
- * `npx wordpress-rest generate`, which adds its custom post types, fields and
+ * `npx wordpress-rest-sdk generate`, which adds its custom post types, fields and
  * plugin routes.
  */
 export function createClient<R = CoreRoutes>(options: ClientOptions): WordPressClient<R> {

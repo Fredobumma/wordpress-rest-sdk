@@ -8,9 +8,15 @@ import { startTestSite } from '../test/support/site.js';
 
 const site = await startTestSite({ port: 9400 });
 await writeFile('.wp-credentials.json', `${JSON.stringify({ admin: site.admin, author: site.author }, null, '\t')}\n`);
-console.log(`WordPress is running at ${site.url} (wp-admin: admin / password)`);
-console.log(`Application passwords are in .wp-credentials.json. To test against it:`);
-console.log(`  WORDPRESS_URL=${site.url} WORDPRESS_CREDENTIALS=.wp-credentials.json pnpm test:integration`);
+console.log(`WordPress is running at ${site.url}. Press Ctrl+C to stop it.
+
+Log in at ${site.url}/wp-admin with one of these:
+  admin   password      (an administrator)
+  author  author-pass   (an author)
+
+.wp-credentials.json has both users' application passwords. Those are for API requests only;
+the login page doesn't accept them. To run the integration tests against this site:
+  WORDPRESS_URL=${site.url} WORDPRESS_CREDENTIALS=.wp-credentials.json pnpm test:integration`);
 
 const stop = async () => {
 	await site.stop();
